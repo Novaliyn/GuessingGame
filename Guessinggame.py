@@ -9,8 +9,9 @@ LISTS = [
     ["Fortnite", "Roblox", "Valorant", "Minecraft", "Destiny 2", "Call of Duty"],
     ["dog", "cat", "bird", "bunny", "dolphin", "tiger", "cheetah", "monkey", "human", "butterfly", "worm", "spider", "snake"],
     ["Potatos", "French Fries", "Pizza", "Salad", "Sushi", "Tacos", "Burgers", "Sandwiches"],
-    ["Taco Bell", "McDonalds", "Burger King", "Subway", "Wendys", "In -N-Out", "Chick-fil-A", "KFC"],
+    ["Taco Bell", "McDonalds", "Burger King", "Subway", "Wendys", "In-N-Out", "Chick-fil-A", "KFC"],
 ]
+CLIST = ["Red", "Orange", "Yellow", "Green", "Blue", "Indigo", "Purple", "Pink", "Brown", "White"]
 LISTSN= ["Games", "Animals", "Food","Resturaunts"]
 LIST = []
 root = Tk()
@@ -19,12 +20,13 @@ WIDTH = (NUMGUESS*150)+50
 X = WIDTH // 2 - WIDTH / 10
 FONT = tkfont.Font(family = "Century", size =  15)
 
-
 def start():
     screen = Canvas(root, width=200, height=len(LISTS)*65, bg= "grey")
     screen.pack(fill=BOTH, expand=True)
     for i in range(len(LISTS)):
-        button = Button(root, text=LISTSN[i], font=FONT ,command=lambda i=i: LISTCHOICE(i))
+        for C in range(NUMGUESS):
+            COLOR = random.choice(CLIST)
+        button = Button(root, text=LISTSN[i], font=FONT, bg = COLOR ,command=lambda i=i: LISTCHOICE(i))
         button.place(x=10, y=20+i*50)
 
 def LISTCHOICE(id):
@@ -47,7 +49,9 @@ def display():
 
 
     for f in range(len(LIST)):
-        button = Button(root, text=LIST[f], font=FONT ,command=lambda f=f: button_click(f))
+        for c in range(NUMGUESS):
+            COLOR = random.choice(CLIST)
+        button = Button(root, text=LIST[f], font=FONT, bg = COLOR,command=lambda f=f: button_click(f))
         button.place(x=X, y=80+f*50)
 
     # Feedback label
@@ -61,7 +65,6 @@ def display():
     #Exit Button
     EXIT = Button(root, text = "EXIT", font=FONT,command= root.destroy)
     EXIT.place(x=WIDTH-75, y=HEIGHT-50)
-
 
 # Convert button clicks into variables.
 def button_click(id2):
@@ -85,7 +88,6 @@ def CHECK():
 def FEEDBACK(feedback):
     AFB.config(text=feedback)
     
-
 # Update feedback display
 def update_feedback():
     FB.config(text=f'Your guesses: {", ".join(GUESS)}')
