@@ -1,8 +1,13 @@
 import random
 from tkinter import *
 import tkinter.font as tkfont
+'''
+The purpose of this program is a simple guessing game, with multiple options on types of objects.
+it uses Tkinter to display a gui and uses buttons and widgets to display buttons for the user to interact with the game.
+Input: Button clicks from user, lists that give the user options for the game.
+Outputs: If user got answer correct, and the list of objects they chose.
 
-# Lists and variables
+'''
 NUMGUESS = 3
 GUESS = []
 LISTS = [
@@ -35,18 +40,16 @@ def LISTCHOICE(id):
     AWS = random.choice(LIST)
     for widget in root.winfo_children():
         widget.destroy()
+
     display()
 
-# Display answer buttons.
 def display():
     global HEIGHT, FB, AFB
-    #Create a background canvas
     HEIGHT = len(LIST)*65
     if HEIGHT < 600:
         HEIGHT = 600
     screen = Canvas(root, width=WIDTH, height=HEIGHT, bg= "grey")
     screen.pack(fill=BOTH, expand=True)
-
 
     for f in range(len(LIST)):
         for c in range(NUMGUESS):
@@ -54,44 +57,35 @@ def display():
         button = Button(root, text=LIST[f], font=FONT, bg = COLOR,command=lambda f=f: button_click(f))
         button.place(x=X, y=80+f*50)
 
-    # Feedback label
     FB = Label(root, text="", font=FONT)
     FB.place(x=10, y= HEIGHT - 100)
 
-    # Correct? Feedback
     AFB = Label(root, text="", font=FONT)
     AFB.place(x=10, y=20)
 
-    #Exit Button
     EXIT = Button(root, text = "EXIT", font=FONT,command= root.destroy)
     EXIT.place(x=WIDTH-75, y=HEIGHT-50)
 
-# Convert button clicks into variables.
 def button_click(id2):
     global GUESS
     if len(GUESS) < NUMGUESS:
         GUESS.append(LIST[id2])
         if len(GUESS) == NUMGUESS:
             CHECK()
-        update_feedback()
+        FB.config(text=f'Your guesses: {", ".join(GUESS)}')
 
-# Check answers
 def CHECK():
     global GUESS
-    if AWS in GUESS:
-        feedback = f'Correct! You guessed: {str(AWS)}'
-    else:
-        feedback = f'Incorrect. The answer was: {str(AWS)}'
-    FEEDBACK(feedback)
+    a1 = 0
+    a2 = 0
+    for a in range(NUMGUESS):
+        a1+=1
+        if AWS == GUESS[a]:
+            a2 = 1
+            feedback = f'Correct! You guessed: {str(AWS)}'
+        elif a1 == NUMGUESS and a2 == 0:
+            feedback = f'Incorrect. The answer was: {str(AWS)}'
+    AFB.config(text = feedback)
 
-# Correct or wrong to user.
-def FEEDBACK(feedback):
-    AFB.config(text=feedback)
-    
-# Update feedback display
-def update_feedback():
-    FB.config(text=f'Your guesses: {", ".join(GUESS)}')
-
-# Start code
 start()
 root.mainloop()
