@@ -2,10 +2,8 @@ import random
 from tkinter import *
 import tkinter.font as tkfont
 '''
-The purpose of this program is a simple guessing game, with multiple options on types of objects.
-it uses Tkinter to display a gui and uses buttons and widgets to display buttons for the user to interact with the game.
-Input: Button clicks from user, lists that give the user options for the game.
-Outputs: If user got answer correct, and the list of objects they chose.
+Updates soon:
+Hint feature?
 
 '''
 NUMGUESS = 3
